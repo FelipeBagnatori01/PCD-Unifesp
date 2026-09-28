@@ -12,7 +12,7 @@ e (via ferramenta externa) energia.
 
 | Arquivo             | Função                                                        |
 |----------------------|----------------------------------------------------------------|
-| `primes_omp.c`       | Código-fonte principal                                        |
+| `primes_omp_macos.c`       | Código-fonte principal                                        |
 | `build_macos.sh`     | Instala dependências e compila no macOS                       |
 | `sweep.sh`           | Roda automaticamente todas as configurações do protocolo mínimo |
 | `run_with_power.sh`  | Roda uma configuração medindo potência via `powermetrics`     |
@@ -25,7 +25,7 @@ chmod +x build_macos.sh sweep.sh run_with_power.sh
 ./build_macos.sh              # instala libomp via Homebrew e compila
 ```
 
-Isso gera o executável `./primes_omp`.
+Isso gera o executável `./primes_omp_macos`.
 
 > Se `libomp` já estiver instalado, o script pula a instalação. Em Apple
 > Silicon, o Homebrew usa `/opt/homebrew`; em Mac Intel, `/usr/local` — o
@@ -34,17 +34,17 @@ Isso gera o executável `./primes_omp`.
 ## 2. Rodar uma configuração isolada
 
 ```bash
-./primes_omp <N> <schedule> <chunk> <threads> [repeticoes] [csv_out]
+./primes_omp_macos <N> <schedule> <chunk> <threads> [repeticoes] [csv_out]
 ```
 
 Exemplos:
 
 ```bash
 # baseline sequencial, 10 repetições
-./primes_omp 10000000 seq 0 1 10 resultados.csv
+./primes_omp_macos 10000000 seq 0 1 10 resultados.csv
 
 # OpenMP, dynamic, chunk=1000, 8 threads, 10 repetições
-./primes_omp 10000000 dynamic 1000 8 10 resultados.csv
+./primes_omp_macos 10000000 dynamic 1000 8 10 resultados.csv
 ```
 
 O programa imprime no terminal um resumo por repetição e acrescenta uma
@@ -94,7 +94,7 @@ nativa é o `powermetrics`, que precisa rodar como root:
 sudo ./run_with_power.sh 20000000 dynamic 1000 8 5 resultados.csv
 ```
 
-Isso roda o `primes_omp` normalmente e, em paralelo, grava a potência do
+Isso roda o `primes_omp_macos` normalmente e, em paralelo, grava a potência do
 sistema em `power_dynamic_1000_8threads.log`. Para extrair a potência
 média do log e estimar a energia:
 

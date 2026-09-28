@@ -20,7 +20,7 @@
 
 set -e
 
-BIN=./primes_omp
+BIN=./primes_omp_macos
 N=10000000                 # tamanho do problema (ajuste conforme o tempo desejado)
 REPS=10                    # repetições por configuração (protocolo pede >= 10)
 CSV_OUT=resultados.csv

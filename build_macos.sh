@@ -1,7 +1,7 @@
 #!/bin/bash
 # -----------------------------------------------------------------------
 # build_macos.sh
-# Compila primes_omp.c em macOS (Intel ou Apple Silicon).
+# Compila primes_omp_macos.c em macOS (Intel ou Apple Silicon).
 #
 # Pré-requisitos:
 #   1) Xcode Command Line Tools:
@@ -41,7 +41,7 @@ LIBOMP_PREFIX=$(brew --prefix libomp)
 echo "== Homebrew prefix: $BREW_PREFIX =="
 echo "== libomp prefix:   $LIBOMP_PREFIX =="
 
-echo "== Compilando primes_omp.c =="
+echo "== Compilando primes_omp_macos.c =="
 clang \
     -Xpreprocessor -fopenmp \
     -I"${LIBOMP_PREFIX}/include" \
@@ -49,16 +49,16 @@ clang \
     -lomp \
     -O2 \
     -Wall \
-    -o primes_omp \
-    primes_omp.c \
+    -o primes_omp_macos \
+    primes_omp_macos.c \
     -lm
 
 echo ""
-echo "== Compilacao concluida: ./primes_omp =="
+echo "== Compilacao concluida: ./primes_omp_macos =="
 echo ""
 echo "Para rodar, pode ser necessario indicar onde esta a libomp em tempo de execucao:"
 echo "  export DYLD_LIBRARY_PATH=\"${LIBOMP_PREFIX}/lib:\$DYLD_LIBRARY_PATH\""
 echo ""
 echo "Teste rapido:"
-echo "  ./primes_omp 1000000 seq 0 1 3 resultados.csv"
-echo "  ./primes_omp 1000000 dynamic 1000 4 3 resultados.csv"
+echo "  ./primes_omp_macos 1000000 seq 0 1 3 resultados.csv"
+echo "  ./primes_omp_macos 1000000 dynamic 1000 4 3 resultados.csv"

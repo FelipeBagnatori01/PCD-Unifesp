@@ -2,7 +2,7 @@
 # -----------------------------------------------------------------------
 # run_with_power.sh
 #
-# Roda o primes_omp coletando, em paralelo, a potência do sistema via
+# Roda o primes_omp_macos coletando, em paralelo, a potência do sistema via
 # `powermetrics` (ferramenta nativa do macOS). Isso substitui o RAPL do
 # Linux, que não existe no macOS.
 #
@@ -59,11 +59,11 @@ PM_PID=$!
 # Pequena pausa para o powermetrics estabilizar antes de medir.
 sleep 1
 
-echo "== Executando primes_omp =="
+echo "== Executando primes_omp_macos =="
 # Se o binário foi compilado por um usuário sem sudo, pode ser necessário
 # rodar com o caminho completo e preservar DYLD_LIBRARY_PATH:
-#   sudo -E ./primes_omp ...
-./primes_omp "$N" "$SCHED" "$CHUNK" "$THREADS" "$REPS" "$CSV_OUT"
+#   sudo -E ./primes_omp_macos ...
+./primes_omp_macos "$N" "$SCHED" "$CHUNK" "$THREADS" "$REPS" "$CSV_OUT"
 
 echo "== Encerrando powermetrics =="
 kill "$PM_PID" 2>/dev/null || true
