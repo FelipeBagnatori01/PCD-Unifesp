@@ -246,6 +246,10 @@ int main(int argc, char **argv) {
                      "(defina _OPENMP corretamente). Rodando sequencial.\n");
     is_sequential = 1;
 #endif
+    if (!is_sequential && nthreads < 1) {
+        fprintf(stderr, "ERRO: numero de threads invalido (%d). Use um valor >= 1.\n", nthreads);
+        return 1;
+    }
     if (!is_sequential && nthreads > max_available) {
         fprintf(stderr, "AVISO: pedidas %d threads, mas apenas %d disponiveis no sistema.\n",
                 nthreads, max_available);
