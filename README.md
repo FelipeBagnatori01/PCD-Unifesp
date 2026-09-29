@@ -95,12 +95,18 @@ sudo ./run_with_power.sh 20000000 dynamic 1000 8 5 resultados.csv
 ```
 
 Isso roda o `primes_omp_macos` normalmente e, em paralelo, grava a potência do
-sistema em `power_dynamic_1000_8threads.log`. Para extrair a potência
-média do log e estimar a energia:
+sistema em `power_dynamic_1000_8threads.log`. O script grava no log as
+linhas `### INICIO_EXECUCAO` e `### FIM_EXECUCAO` imediatamente antes e
+depois do programa, para que as amostras de repouso (antes e depois da
+execução) fiquem de fora da média. Para extrair a potência média durante
+a execução e estimar a energia:
 
 ```bash
-grep 'Combined Power' power_dynamic_1000_8threads.log | awk '{print $NF}'
+awk '/^### INICIO_EXECUCAO/ {on=1; next} /^### FIM_EXECUCAO/ {on=0} on && /Combined Power/ {s+=$(NF-1); n++} END {print n " amostras, " s/n " mW = " s/n/1000 " W"}' power_dynamic_1000_8threads.log
 ```
+
+Logs gerados antes dessas marcas existirem não têm as linhas `###`; neles,
+esse comando não encontra amostras.
 
 Energia estimada (Joules) = potência média (W) × tempo de execução (s),
 usando o `wall_time_s` correspondente no CSV.
@@ -108,7 +114,10 @@ usando o `wall_time_s` correspondente no CSV.
 **Limitações a registrar no artigo:**
 - `powermetrics` amostra em intervalos (ex.: 500 ms), então execuções
   muito curtas (< poucos segundos) não têm energia bem estimada — use
-  N grande o suficiente.
+  N grande o suficiente. Mesmo com as marcas de início/fim, a primeira
+  amostra após `INICIO_EXECUCAO` ainda cobre até 500 ms de repouso, e o
+  trecho final da execução entra na amostra que só é gravada depois de
+  `FIM_EXECUCAO` (e por isso fica de fora).
 - Em Apple Silicon, "Combined Power" inclui CPU + GPU + Neural Engine;
   não é possível isolar apenas os núcleos usados pelo OpenMP.
 - Núcleos de performance e eficiência (P-cores/E-cores) em Apple Silicon
