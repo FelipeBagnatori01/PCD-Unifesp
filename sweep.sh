@@ -21,12 +21,12 @@
 set -e
 
 BIN=./primes_omp_macos
-N=10000000                 # tamanho do problema (ajuste conforme o tempo desejado)
+N=100000000                 # tamanho do problema (ajuste conforme o tempo desejado)
 REPS=10                    # repetições por configuração (protocolo pede >= 10)
 CSV_OUT=resultados.csv
 SCHEDULES=("dynamic" "guided" "static")
 CHUNKS=(1 100 1000 10000)
-THREAD_LIST=(1 2 4 8)      # adicione mais valores se sua máquina tiver mais núcleos
+THREAD_LIST=(1 2 4 8 12)      # adicione mais valores se sua máquina tiver mais núcleos
 
 if [ ! -x "$BIN" ]; then
     echo "ERRO: $BIN não encontrado ou não executável. Rode ./build_macos.sh primeiro."
