@@ -165,7 +165,9 @@ static run_result_t run_parallel(int64_t n, omp_sched_t kind, int chunk, int nth
 
         int64_t local_work = 0;
 
-        #pragma omp for schedule(runtime)
+        /* nowait: sem ele, a barreira implícita do 'for' faria toda thread
+           esperar a mais lenta antes de ts1, zerando o imbalance medido. */
+        #pragma omp for schedule(runtime) nowait
         for (int64_t i = 2; i <= n; i++) {
             int64_t w = 0;
             if (is_prime(i, &w)) count++;
