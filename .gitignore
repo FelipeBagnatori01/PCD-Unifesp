@@ -1,2 +1,7 @@
 # Mac OS
 .DS_Store
+primes_omp_linux
+teste.csv
+sweep_teste.sh
+sweep.log
+nohup.out
