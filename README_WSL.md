@@ -99,5 +99,4 @@ awk -F, 'NR>1 {pc[$8]++; tw[$15]++} END {for(k in pc) print "prime_count", k, pc
   núcleos exibida pelo `lscpu` é a virtualizada.
 - **Processador híbrido:** as 16 threads lógicas não correspondem a 16 núcleos
   idênticos, o que pode afetar a escalabilidade a partir de 8 threads.
-- **Threads:** o macOS foi testado com 12 e o WSL com 16, então só 1, 2, 4 e 8
-  são diretamente comparáveis.
+- **Threads:** 1, 2, 4, 8, 12 e 16.
