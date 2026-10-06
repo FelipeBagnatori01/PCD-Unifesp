@@ -23,10 +23,10 @@ set -e
 BIN=./primes_omp_linux
 N=100000000                 # tamanho do problema (ajuste conforme o tempo desejado)
 REPS=10                    # repetições por configuração (protocolo pede >= 10)
-CSV_OUT=resultados_wsl.csv
+CSV_OUT=NOVO_resultado_wsl.csv
 SCHEDULES=("dynamic" "guided" "static")
 CHUNKS=(1 100 1000 10000)
-THREAD_LIST=(1 2 4 8 16)      # adicione mais valores se sua máquina tiver mais núcleos
+THREAD_LIST=(1 2 4 8 12 16)      # adicione mais valores se sua máquina tiver mais núcleos
 
 if [ ! -x "$BIN" ]; then
     echo "ERRO: $BIN não encontrado ou não executável. Rode ./build_linux.sh primeiro."
